@@ -7,12 +7,14 @@ const app = express();
 // superagent client AJAX library for calling 3rd party APIs
 const request = require('superagent');
 
-// middleware (cors and read json body)
+// middleware (cors, logging, and read json body)
 const cors = require('cors');
 const morgan = require('morgan');
-app.use(morgan('dev'));
+
 app.use(cors());
+app.use(morgan('dev'));
 app.use(express.json());
+
 // server files in public directory
 app.use(express.static('public'));
 
@@ -54,7 +56,7 @@ app.post('/api/neighborhoods', auth, (req, res, next) => {
   if(body.name === 'error') return next('bad name');
 
   // get user id via:
-  const userId = req.userId;
+  // const userId = req.userId;
   
   client.query(`
     insert into neighborhoods (name, quadrant_id, population, founded, description)
